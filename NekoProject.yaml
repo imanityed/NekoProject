@@ -61,7 +61,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/gateserver/gateserver:/app/gateserver:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/gateserver.xml:/app/conf/gateserver.xml
       - ./Log:/app/log
     command: ./gateserver -i 1.1.1.1
@@ -84,7 +84,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/gameserver/gameserver:/app/gameserver:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/gameserver.xml:/app/conf/gameserver.xml
       - ./Data/data/json:/data/json:ro
       - ./Data/data/lua:/data/lua:ro
@@ -111,7 +111,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/nodeserver/nodeserver:/app/nodeserver:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/nodeserver.xml:/app/conf/nodeserver.xml
       - ./Log:/app/log
     command: ./nodeserver -i 1.3.1.1
@@ -132,7 +132,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/dbgate/dbgate:/app/dbgate:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/dbgate.xml:/app/conf/dbgate.xml
       - ./Log:/app/log
     command: ./dbgate -i 1.4.1.1
@@ -155,7 +155,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/dispatch/dispatch:/app/dispatch:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/dispatch.xml:/app/conf/dispatch.xml
       - ./Log:/app/log
     command: ./dispatch -i 1.5.1.1
@@ -178,7 +178,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/muipserver/muipserver:/app/muipserver:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/muipserver.xml:/app/conf/muipserver.xml
       - ./Data/data/json:/data/json:ro
       - ./Data/data/lua:/data/lua:ro
@@ -204,7 +204,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/multiserver/multiserver:/app/multiserver:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/multiserver.xml:/app/conf/multiserver.xml
       - ./Data/data/json:/data/json:ro
       - ./Data/data/lua:/data/lua:ro
@@ -231,7 +231,7 @@ services:
        - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
        - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
        - ./Bin/pathfindingserver/pathfindingserver:/app/pathfindingserver:ro
-       - ./Config/data/version.txt:/data/version.txt:ro
+       - ./Data/data:/data:ro
        - ./Config/pathfindingserver.xml:/app/conf/pathfindingserver.xml
        - ./Log:/app/log
        - ./Data/res:/res
@@ -255,7 +255,7 @@ services:
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/oaserver/oaserver:/app/oaserver:ro
-      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Data/data:/data:ro
       - ./Config/oaserver.xml:/app/conf/oaserver.xml
       - ./Data/data/json:/data/json:ro
       - ./Data/data/lua:/data/lua:ro
@@ -282,7 +282,7 @@ services:
        - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
        - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
        - ./Bin/tothemoonserver/tothemoonserver:/app/tothemoonserver:ro
-       - ./Config/data/version.txt:/data/version.txt:ro
+       - ./Data/data:/data:ro
        - ./Config/tothemoonserver.xml:/app/conf/tothemoonserver.xml
        - ./Log:/app/log
        - ./Data/res:/res
