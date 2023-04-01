@@ -60,7 +60,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/gateserver/gateserver:/app/gateserver:ro
+      - ./Bin/gateserver:/app/gateserver:ro
       - ./Data/data:/data:ro
       - ./Config/gateserver.xml:/app/conf/gateserver.xml
       - ./Log:/app/log
@@ -83,7 +83,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/gameserver/gameserver:/app/gameserver:ro
+      - ./Bin/gameserver:/app/gameserver:ro
       - ./Data/data:/data:ro
       - ./Config/gameserver.xml:/app/conf/gameserver.xml
       - ./Data/data/json:/data/json:ro
@@ -110,7 +110,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/nodeserver/nodeserver:/app/nodeserver:ro
+      - ./Bin/nodeserver:/app/nodeserver:ro
       - ./Data/data:/data:ro
       - ./Config/nodeserver.xml:/app/conf/nodeserver.xml
       - ./Log:/app/log
@@ -131,7 +131,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/dbgate/dbgate:/app/dbgate:ro
+      - ./Bin/dbgate:/app/dbgate:ro
       - ./Data/data:/data:ro
       - ./Config/dbgate.xml:/app/conf/dbgate.xml
       - ./Log:/app/log
@@ -154,7 +154,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/dispatch/dispatch:/app/dispatch:ro
+      - ./Bin/dispatch:/app/dispatch:ro
       - ./Data/data:/data:ro
       - ./Config/dispatch.xml:/app/conf/dispatch.xml
       - ./Log:/app/log
@@ -177,7 +177,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/muipserver/muipserver:/app/muipserver:ro
+      - ./Bin/muipserver:/app/muipserver:ro
       - ./Data/data:/data:ro
       - ./Config/muipserver.xml:/app/conf/muipserver.xml
       - ./Data/data/json:/data/json:ro
@@ -203,7 +203,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/multiserver/multiserver:/app/multiserver:ro
+      - ./Bin/multiserver:/app/multiserver:ro
       - ./Data/data:/data:ro
       - ./Config/multiserver.xml:/app/conf/multiserver.xml
       - ./Data/data/json:/data/json:ro
@@ -230,7 +230,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/pathfindingserver/pathfindingserver:/app/pathfindingserver:ro
+      - ./Bin/pathfindingserver:/app/pathfindingserver:ro
       - ./Data/data:/data:ro
       - ./Config/pathfindingserver.xml:/app/conf/pathfindingserver.xml
       - ./Log:/app/log
@@ -254,7 +254,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/oaserver/oaserver:/app/oaserver:ro
+      - ./Bin/oaserver:/app/oaserver:ro
       - ./Data/data:/data:ro
       - ./Config/oaserver.xml:/app/conf/oaserver.xml
       - ./Data/data/json:/data/json:ro
@@ -281,7 +281,7 @@ services:
       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-      - ./Bin/tothemoonserver/tothemoonserver:/app/tothemoonserver:ro
+      - ./Bin/tothemoonserver:/app/tothemoonserver:ro
       - ./Data/data:/data:ro
       - ./Config/tothemoonserver.xml:/app/conf/tothemoonserver.xml
       - ./Log:/app/log
@@ -298,7 +298,7 @@ services:
     ports:
       - 2300:2330
     volumes:
-      - ./Bin/sdkserver/sdkserver:/app/emu:ro
+      - ./Bin/sdkserver:/app/emu:ro
       - ./Config/config.yaml:/app/config.yaml
       - ./Data/sdkdata:/app/data
       - ./Log:/app/log
