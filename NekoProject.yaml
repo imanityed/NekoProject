@@ -213,29 +213,29 @@ services:
       - ./Log:/app/log
       - ./Data/res:/res
     command: ./multiserver -i 1.7.1.1
-    pathfindingserver:
-     build: .
-     image: hk4e/ubuntu
-     container_name: pathfindingserver
-     restart: unless-stopped
-     depends_on:
-       mysql: { condition: service_healthy }
-       redis: { condition: service_healthy }
-     networks:
-       bridge:
-         ipv4_address: 192.0.0.18
-     expose:
-       - 18551
-     volumes:
-       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-       - ./Bin/pathfindingserver/pathfindingserver:/app/pathfindingserver:ro
-       - ./Data/data:/data:ro
-       - ./Config/pathfindingserver.xml:/app/conf/pathfindingserver.xml
-       - ./Log:/app/log
-       - ./Data/res:/res
-     command: ./pathfindingserver -i 1.8.1.1
+  pathfindingserver:
+    build: .
+    image: hk4e/ubuntu
+    container_name: pathfindingserver
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    networks:
+      bridge:
+        ipv4_address: 192.0.0.18
+    expose:
+      - 18551
+    volumes:
+      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
+      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
+      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
+      - ./Bin/pathfindingserver/pathfindingserver:/app/pathfindingserver:ro
+      - ./Data/data:/data:ro
+      - ./Config/pathfindingserver.xml:/app/conf/pathfindingserver.xml
+      - ./Log:/app/log
+      - ./Data/res:/res
+    command: ./pathfindingserver -i 1.8.1.1
   oaserver:
     build: .
     image: hk4e/ubuntu
@@ -264,29 +264,29 @@ services:
       - ./Log:/app/log
       - ./Data/res:/res
     command: ./oaserver -i 1.9.1.1
-   tothemoonserver:
-     build: .
-     image: hk4e/ubuntu
-     container_name: tothemoonserver
-     restart: unless-stopped
-     depends_on:
-       mysql: { condition: service_healthy }
-       redis: { condition: service_healthy }
-     networks:
-       bridge:
-         ipv4_address: 192.0.0.20
-     expose:
-       - 18701
-     volumes:
-       - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-       - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-       - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
-       - ./Bin/tothemoonserver/tothemoonserver:/app/tothemoonserver:ro
-       - ./Data/data:/data:ro
-       - ./Config/tothemoonserver.xml:/app/conf/tothemoonserver.xml
-       - ./Log:/app/log
-       - ./Data/res:/res
-     command: ./tothemoonserver -i 1.10.1.1
+  tothemoonserver:
+    build: .
+    image: hk4e/ubuntu
+    container_name: tothemoonserver
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    networks:
+      bridge:
+        ipv4_address: 192.0.0.20
+    expose:
+      - 18701
+    volumes:
+      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
+      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
+      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
+      - ./Bin/tothemoonserver/tothemoonserver:/app/tothemoonserver:ro
+      - ./Data/data:/data:ro
+      - ./Config/tothemoonserver.xml:/app/conf/tothemoonserver.xml
+      - ./Log:/app/log
+      - ./Data/res:/res
+    command: ./tothemoonserver -i 1.10.1.1
   sdkserver:
     build: .
     image: hk4e/ubuntu
