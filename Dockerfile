@@ -1,6 +1,3 @@
-FROM ubuntu:latest
-RUN apt-get update && \
-    apt-get -y --no-install-recommends install python2.7-dev && \
-    rm -rf /var/cache && \
-    rm -rf /var/lib/apt/lists/*
+FROM debian:11.6
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list&&apt-get update&&apt-get install python2.7-dev -y&&apt-get install libasan5 -y
 WORKDIR /app
