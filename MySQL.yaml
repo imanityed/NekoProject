@@ -1,0 +1,28 @@
+version: "3.8"
+networks:
+  network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/8
+          gateway: 10.0.0.1
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: MySQL
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: c4687b2e-3b67-4ab7-819f-6afeff2b9880
+    networks:
+      network:
+        ipv4_address: 10.0.0.2
+    ports:
+      - 3330:3306
+    volumes:
+      - ./Database/MySQL:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
