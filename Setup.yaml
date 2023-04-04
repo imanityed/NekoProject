@@ -247,21 +247,7 @@ services:
       - ./Bin/tothemoonserver:/app/tothemoonserver:ro
       - ./Data/data:/data:ro
       - ./Config/tothemoonserver.xml:/app/conf/tothemoonserver.xml
+      - ./config/data/version.txt:/data/version.txt:ro
       - ./Log:/app/log
       - ./Data/res:/res
     command: ./tothemoonserver -i 1.10.1.1
-  sdkserver:
-    build: .
-    image: debian:11.6
-    container_name: SDK_Server
-    networks:
-      network:
-        ipv4_address: 10.0.0.14
-    ports:
-      - 20901:20901
-    volumes:
-      - ./Bin/sdkserver:/app/emu:ro
-      - ./Config/config.yaml:/app/config.yaml
-      - ./Data/sdk:/app/data
-      - ./Log:/app/log
-    command: ./sdkserver
