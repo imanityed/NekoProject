@@ -39,12 +39,11 @@ services:
       - 6330:6330
     volumes:
       - ./Database/Redis:/data
-    command: --requirepass "5bad6ba4-b6ec-460f-abaf-801d7396c9c4" --databases "168"
+    command: --requirepass "5bad6ba4-b6ec-460f-abaf-801d7396c9c4" --databases "168" --bind "0.0.0.0"
   gateserver:
     build: .
     image: debian:11.6
     container_name: GateServer
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -59,9 +58,6 @@ services:
       - 20101:20101
       - 20101:20101/udp
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/gateserver:/app/gateserver:ro
       - ./Data/data:/data:ro
       - ./Config/gateserver.xml:/app/conf/gateserver.xml
@@ -82,9 +78,6 @@ services:
     expose:
       - 20201
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/gameserver:/app/gameserver:ro
       - ./Data/data:/data:ro
       - ./Config/gameserver.xml:/app/conf/gameserver.xml
@@ -99,7 +92,6 @@ services:
     build: .
     image: debian:11.6
     container_name: NodeServer
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -109,9 +101,6 @@ services:
     expose:
       - 20301
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/nodeserver:/app/nodeserver:ro
       - ./Data/data:/data:ro
       - ./Config/nodeserver.xml:/app/conf/nodeserver.xml
@@ -121,7 +110,6 @@ services:
     build: .
     image: debian:11.6
     container_name: DB_Gate
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -130,9 +118,6 @@ services:
       network:
         ipv4_address: 10.0.0.7
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/dbgate:/app/dbgate:ro
       - ./Data/data:/data:ro
       - ./Config/dbgate.xml:/app/conf/dbgate.xml
@@ -142,7 +127,6 @@ services:
     build: .
     image: debian:11.6
     container_name: Dispatch
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -153,9 +137,6 @@ services:
       - 20401:20401
       - 20411:20411
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/dispatch:/app/dispatch:ro
       - ./Data/data:/data:ro
       - ./Config/dispatch.xml:/app/conf/dispatch.xml
@@ -165,7 +146,6 @@ services:
     build: .
     image: debian:11.6
     container_name: MuipServer
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -176,9 +156,6 @@ services:
     ports:
       - 20501:20501
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/muipserver:/app/muipserver:ro
       - ./Data/data:/data:ro
       - ./Config/muipserver.xml:/app/conf/muipserver.xml
@@ -193,7 +170,6 @@ services:
     build: .
     image: debian:11.6
     container_name: MultiServer
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -202,9 +178,6 @@ services:
       network:
         ipv4_address: 10.0.0.10
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/multiserver:/app/multiserver:ro
       - ./Data/data:/data:ro
       - ./Config/multiserver.xml:/app/conf/multiserver.xml
@@ -219,7 +192,6 @@ services:
     build: .
     image: debian:11.6
     container_name: PathfindingServer
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -229,9 +201,6 @@ services:
     expose:
       - 20601
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/pathfindingserver:/app/pathfindingserver:ro
       - ./Data/data:/data:ro
       - ./Config/pathfindingserver.xml:/app/conf/pathfindingserver.xml
@@ -242,7 +211,6 @@ services:
     build: .
     image: debian:11.6
     container_name: OA_Server
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -253,9 +221,6 @@ services:
     ports:
       - 20701:20701
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/oaserver:/app/oaserver:ro
       - ./Data/data:/data:ro
       - ./Config/oaserver.xml:/app/conf/oaserver.xml
@@ -270,7 +235,6 @@ services:
     build: .
     image: debian:11.6
     container_name: TothemoonServer
-    restart: unless-stopped
     depends_on:
       mysql: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -280,9 +244,6 @@ services:
     expose:
       - 20801
     volumes:
-      - ./Bin/lib/libasan.so.5:/lib/libasan.so.5:ro
-      - ./Bin/lib/libgcc_s.so.1:/lib/libgcc_s.so.1:ro
-      - ./Bin/lib/libstdc++.so.6:/lib/libstdc++.so.6:ro
       - ./Bin/tothemoonserver:/app/tothemoonserver:ro
       - ./Data/data:/data:ro
       - ./Config/tothemoonserver.xml:/app/conf/tothemoonserver.xml
@@ -293,7 +254,6 @@ services:
     build: .
     image: debian:11.6
     container_name: SDK_Server
-    restart: unless-stopped
     networks:
       network:
         ipv4_address: 10.0.0.14
