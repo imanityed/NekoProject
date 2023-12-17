@@ -13,4 +13,4 @@
 - 请将 Windows 更新到最新稳定版本。
 
 # 3. 部署文档
-- 部署文档为"[DEPLOYMENT.md](https://github.com/imanityed/NekoProject/raw/main/DEPLOYMENT.md)"文件。
+- 部署文档为"[DEPLOYMENT.md](DEPLOYMENT.md)"文件。
