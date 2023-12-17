@@ -1,0 +1,286 @@
+version: "3.8"
+networks:
+  bridge:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/8
+          gateway: 10.0.0.1
+services:
+#MySQL Server
+  mysql:
+    image: mysql:5.7-debian
+    container_name: mysql
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    environment:
+      MYSQL_ROOT_PASSWORD: f2c340a9-bf06-4345-9654-00b074b92fe8
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.2
+    ports:
+      - 3306:3306
+    volumes:
+      - ./MySQL:/var/lib/mysql
+#Redis Server
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    healthcheck:
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.3
+    ports:
+      - 6379:6379
+    volumes:
+      - ./Redis:/data
+    command: --requirepass "5bad6ba4-b6ec-460f-abaf-801d7396c9c4" --databases "200" --bind "0.0.0.0"
+#Gate Server
+  gateserver:
+    build: .
+    image: neko/debian
+    container_name: gate-server
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      gameserver: { condition: service_started }
+      dispatch: { condition: service_started }
+      pathfindingserver: { condition: service_started }
+      tothemoonserver: { condition: service_started }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.11
+    ports:
+      - 20041:20041
+      - 20041:20041/udp
+    volumes:
+      - ./Server/gateserver:/app/gateserver:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/gateserver.xml:/app/conf/gateserver.xml
+      - ./Logs:/app/log
+    command: ./gateserver -i 9001.1.1.1
+#Game-Server
+  gameserver:
+    build: .
+    image: neko/debian
+    container_name: game-server
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      nodeserver: { condition: service_started }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.12
+    expose:
+      - 20071
+    volumes:
+      - ./Server/gameserver:/app/gameserver:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/gameserver.xml:/app/conf/gameserver.xml
+      - ./Config/data/json:/data/json:ro
+      - ./Config/data/lua:/data/lua:ro
+      - ./Config/data/txt:/data/txt:ro
+      - ./Config/data/xml:/data/xml:ro
+      - ./Logs:/app/log
+      - ./Config/res:/res
+    command: ./gameserver -i 9001.2.1.1
+#Node-Server
+  nodeserver:
+    build: .
+    image: neko/debian
+    container_name: node-server
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.13
+    expose:
+      - 20081
+    volumes:
+      - ./Server/nodeserver:/app/nodeserver:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/nodeserver.xml:/app/conf/nodeserver.xml
+      - ./Logs:/app/log
+    command: ./nodeserver -i 9001.3.1.1
+#DB-Gate
+  dbgate:
+    build: .
+    image: neko/debian
+    container_name: db-gate
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      nodeserver: { condition: service_started }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.14
+    volumes:
+      - ./Server/dbgate:/app/dbgate:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/dbgate.xml:/app/conf/dbgate.xml
+      - ./Logs:/app/log
+    command: ./dbgate -i 9001.4.1.1
+#Dispatch
+  dispatch:
+    build: .
+    image: neko/debian
+    container_name: dispatch
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.15
+    ports:
+      - 20021:20021
+      - 20001:20001
+    volumes:
+      - ./Server/dispatch:/app/dispatch:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/dispatch.xml:/app/conf/dispatch.xml
+      - ./Logs:/app/log
+    command: ./dispatch -i 9001.5.1.1
+#Muip-Server
+  muipserver:
+    build: .
+    image: neko/debian
+    container_name: muip-server
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      nodeserver: { condition: service_started }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.16
+    ports:
+      - 20011:20011
+    volumes:
+      - ./Server/muipserver:/app/muipserver:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/muipserver.xml:/app/conf/muipserver.xml
+      - ./Config/data/json:/data/json:ro
+      - ./Config/data/lua:/data/lua:ro
+      - ./Config/data/txt:/data/txt:ro
+      - ./Config/data/xml:/data/xml:ro
+      - ./Logs:/app/log
+      - ./Config/res:/res
+    command: ./muipserver -i 9001.6.1.1
+#Multi-Server
+  multiserver:
+    build: .
+    image: neko/debian
+    container_name: multi-server
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      nodeserver: { condition: service_started }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.17
+    volumes:
+      - ./Server/multiserver:/app/multiserver:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/multiserver.xml:/app/conf/multiserver.xml
+      - ./Config/data/json:/data/json:ro
+      - ./Config/data/lua:/data/lua:ro
+      - ./Config/data/txt:/data/txt:ro
+      - ./Config/data/xml:/data/xml:ro
+      - ./Logs:/app/log
+      - ./Config/res:/res
+    command: ./multiserver -i 9001.7.1.1
+#PathFinding-Server
+   pathfindingserver:
+     build: .
+     image: neko/debian
+     container_name: pathfinding-server
+     restart: unless-stopped
+     depends_on:
+       mysql: { condition: service_healthy }
+       redis: { condition: service_healthy }
+     networks:
+       bridge:
+         ipv4_address: 10.0.0.18
+     expose:
+       - 20061
+     volumes:
+       - ./Server/pathfindingserver:/app/pathfindingserver:ro
+       - ./Config/data/version.txt:/data/version.txt:ro
+       - ./Server/pathfindingserver.xml:/app/conf/pathfindingserver.xml
+       - ./Logs:/app/log
+       - ./Config/res:/res
+     command: ./pathfindingserver -i 9001.8.1.1
+#OA-Server
+  oaserver:
+    build: .
+    image: neko/debian
+    container_name: oa-erver
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      nodeserver: { condition: service_started }
+    networks:
+      bridge:
+        ipv4_address: 10.0.0.19
+    ports:
+      - 20051:20051
+    volumes:
+      - ./Server/oaserver:/app/oaserver:ro
+      - ./Config/data/version.txt:/data/version.txt:ro
+      - ./Server/oaserver.xml:/app/conf/oaserver.xml
+      - ./Config/data//json:/data/json:ro
+      - ./Config/data/lua:/data/lua:ro
+      - ./Config/data/txt:/data/txt:ro
+      - ./Config/data/xml:/data/xml:ro
+      - ./Logs:/app/log
+      - ./Config/res:/res
+    command: ./oaserver -i 9001.9.1.1
+#TotheMoon-Server
+   tothemoonserver:
+     build: .
+     image: neko/debian
+     container_name: tothemoonserver
+     restart: unless-stopped
+     depends_on:
+       mysql: { condition: service_healthy }
+       redis: { condition: service_healthy }
+     networks:
+       bridge:
+         ipv4_address: 10.0.0.20
+     expose:
+       - 20031
+     volumes:
+       - ./Server/tothemoonserver:/app/tothemoonserver:ro
+       - ./Config/data/version.txt:/data/version.txt:ro
+       - ./Server/tothemoonserver.xml:/app/conf/tothemoonserver.xml
+       - ./Logs:/app/log
+       - ./Config/res:/res
+     command: ./tothemoonserver -i 9001.10.1.1
+#SDK-Server
+   sdkserver:
+     build: .
+     image: neko/debian
+     container_name: sdk-server
+     restart: unless-stopped
+     networks:
+       bridge:
+         ipv4_address: 10.0.0.21
+     expose:
+       - 80
+     volumes:
+
+     command: 
