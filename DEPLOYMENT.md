@@ -69,5 +69,5 @@
 ​			以管理员权限打开"Windows Power Shell"并切换到项目所在目录输入：
 
 ```powershell
-docker compose -f neko.yaml build
+docker compose -f docker.yaml build
 ```
